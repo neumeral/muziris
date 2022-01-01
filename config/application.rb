@@ -24,11 +24,5 @@ module Muziris
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
     config.autoload_paths << "#{Rails.root}/lib"
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins '*'
-        resource '*', headers: :any, methods: [:delete, :patch, :put, :get, :post, :options]
-      end
-    end
   end
 end
