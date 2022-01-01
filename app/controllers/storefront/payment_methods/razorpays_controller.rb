@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # razor pay payment gateway
 module Storefront
   module PaymentMethods

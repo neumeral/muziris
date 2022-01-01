@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class StorefrontController < ActionController::Base
   # include StorefrontHelper
   before_action :set_variables

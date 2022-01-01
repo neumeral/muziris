@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Api::V1
   class ProductStocksController < ApiController
     before_action :set_product_stock, only: [:show, :update, :destroy]

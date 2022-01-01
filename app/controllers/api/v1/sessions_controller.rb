@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Api::V1
   class SessionsController < ApiController
     skip_before_action :authenticate_user_with_api_token, only: :create

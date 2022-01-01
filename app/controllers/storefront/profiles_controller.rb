@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Storefront
   class ProfilesController < StorefrontController
     before_action :authenticate_user!

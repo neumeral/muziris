@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
-# Stripe
 module PaymentProvider
+  # Stripe
   class Stripe
     def initialize(options = {})
       @params = options[:params]

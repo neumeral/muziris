@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Api::V1
   class WishlistItemsController < ApiController
     before_action :set_wishlist_item, only: [:show, :update, :destroy]

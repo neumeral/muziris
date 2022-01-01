@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Storefront
   class CategoriesController < StorefrontController
     include Pagy::Backend

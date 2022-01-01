@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 namespace :ops do
   desc 'Remove all expired otp records'
   task remove_expired_otps: [:environment] do

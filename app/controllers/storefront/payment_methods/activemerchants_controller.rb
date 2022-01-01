@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # active merchant gateway
 module Storefront
   module PaymentMethods

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Storefront
   class AddressesController < StorefrontController
     skip_before_action :verify_authenticity_token

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class AddressSerializer
   include FastJsonapi::ObjectSerializer
   attributes :id, :address_line1,

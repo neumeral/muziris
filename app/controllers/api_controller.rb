@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class ApiController < ActionController::Base
   include Pundit
   protect_from_forgery

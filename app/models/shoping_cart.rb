@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class ShopingCart
   delegate :total_amount, to: :order
   attr_reader :order

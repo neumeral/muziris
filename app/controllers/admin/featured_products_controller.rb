@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Admin
   class FeaturedProductsController < AdminController
     include Pagy::Backend

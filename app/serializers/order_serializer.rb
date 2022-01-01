@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class OrderSerializer
   include FastJsonapi::ObjectSerializer
   attributes :id, :user_id, :total_amount, :token,

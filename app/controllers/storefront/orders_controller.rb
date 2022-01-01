@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Storefront
   class OrdersController < StorefrontController
     before_action :authenticate_user!

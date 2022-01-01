@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Add Users
 users = User.create!(
   [

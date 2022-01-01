@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class SentSms < ApplicationRecord
   validates :mobile, :sms_type, :status, presence: true
 

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class AddressPolicy < ApplicationPolicy
   def index?
     user

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Api::V1
   class ProductImagesController < ApiController
     before_action :set_product_image, only: [:show, :update, :destroy]

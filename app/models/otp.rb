@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Otp < ApplicationRecord
   scope :expired, -> { where('valid_till < ?', Time.zone.now) }
   belongs_to :user
