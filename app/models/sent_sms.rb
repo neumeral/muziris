@@ -1,3 +1,5 @@
+require 'textlocal_client'
+
 class SentSms < ApplicationRecord
   validates :mobile, :sms_type, :status, presence: true
 
