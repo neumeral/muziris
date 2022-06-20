@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="container">
+    <div class="thickline"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 mx-auto mt-5 col col-sm-6 col-xs-12">
+      <div class="card p-3">
+        <h6 class="text-center"><%= t('profile.update_profile') %></h6>
+        <hr/>
+        <%= form_for(current_user, url: storefront_profile_path(current_user)) do |f| %>
+          <div class="form-group">
+            <%= f.label :name %>
+            <%= f.text_field :name, autofocus: true, autocomplete: 'name', class: 'form-control' %>
+          </div>
+          <div class="form-group">
+            <%= f.label :mobile %>
+            <%= f.text_field :mobile, autofocus: true, autocomplete: 'mobile', class: 'form-control' %>
+          </div>
+          <div class="actions">
+            <%= f.submit t('profile.submit'), class: 'btn btn-primary btn-block' %>
+          </div>
+        <% end %>
+        <div class="py-2"></div>
+      </div>
+    </div>
+  </div>
+</div>

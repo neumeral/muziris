@@ -1,0 +1,65 @@
+!!!
+%html{lang: "en"}
+  %head
+    %meta{charset: 'utf-8'}/
+    %meta{content: 'width=device-width, initial-scale=1, shrink-to-fit=no', name: 'viewport'}/
+    %meta{content: '', name: 'description'}/
+    %meta{content: '', name: 'author'}/
+    %title #{t('title')}
+
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application'
+  %body
+    %nav.navbar.navbar-dark.fixed-top.bg-theme.p-0
+      = link_to t('title'), root_path, class: 'navbar-brand bg-theme text-light px-3'
+      %button.d-sm-none.navbar-toggler{"aria-controls" => "navbarCollapse", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarCollapse", "data-toggle" => "collapse", :type => "button"}
+        %span.navbar-toggler-icon
+
+      - if current_user
+        .d-sm-none.collapse.navbar-collapse.sidebar-navbar#navbarCollapse
+          %ul.nav.flex-column
+            %li.nav-item
+              = link_to root_path, class: 'nav-link' do
+                %span{'data-feather' => 'users'}
+                Users
+            - if current_user.admin?
+              %li.nav-item
+                %a.nav-link{href: '#'}
+                  %span{'data-feather' => 'droplet'}
+                  Link 2
+              %li.nav-item
+                %a.nav-link{href: '#'}
+                  %span{'data-feather' => 'user'}
+                  User
+        %ul.navbar-nav.px-3.d-xs-none
+          %li.nav-item.text-nowrap
+            %span.navbar-text
+              Logged in as #{current_user.email}.
+              = link_to t('sign_out'), destroy_user_session_path
+    .container-fluid
+      .row
+        - if current_user.nil?
+          %main.col-md-12.ml-auto.px-4.py-5
+            .well.text-center
+              %p No valid roles!
+              %p
+                Please contact
+                %b #{t('title')}
+                admin at
+                = link_to t('pages.support_email'), "mailto:#{t('pages.support_email')}"
+        - else
+          %main.col-md-12.ml-auto.px-4.py-5
+            - unless flash.empty?
+              .row
+                .col-md-6.col.col-sm-8.col-xs-12.mx-auto
+                  %div.text-center
+                    - flash.each do |name, msg|
+                      = content_tag :div, msg, class: "#{flash_class(name)}"
+            = yield
+
+    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"}
+    %script{:src => "https://unpkg.com/popper.js@1.14.3/dist/umd/popper.min.js"}
+    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"}
+    %script{src: 'https://unpkg.com/feather-icons/dist/feather.min.js'}
+    :javascript
+      feather.replace()

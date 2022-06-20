@@ -1,0 +1,205 @@
+<hr />
+
+<div class="content">
+  <div class="container">
+    <div class="thickline"></div>
+  </div>
+  <nav class="breadcrumb container">
+    <a class="breadcrumb-item" href="<%= storefront_home_path %>"><%= t('home.home') %></a>
+    <a class="breadcrumb-item" href="<%= cart_storefront_orders_path %>"><%= t('checkout.cart') %></a>
+    <span class="breadcrumb-item active"><%= t('checkout.checkout') %></span>
+
+  </nav>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <%= form_for(:address, url: confirm_order_storefront_orders_path, method: :post, :html => { :id => 'mainForm' }) do |f| %>
+          <div class="container nicocheckout">
+            <div>
+              <div>
+                <div class="error"></div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <h3 class='mb-4'><%= t('checkout.checkout') %></h3>
+                  </div>
+                </div>
+                <div class="row box checkout_form">
+                  <div class="col-md-6">
+                    <div class="shiptobilling clearfix form-group">
+                      <h5> <%= t('checkout.delivery_details') %></h5>
+                      <br>
+                      <div class="form-group" id="addresses" style="display:block">
+                        <p><%= t('checkout.Choose_an_address') %></p>
+                        <%= f.select :address, @addresses.collect { |address| [address.address_line1, address.id]}, {}, class: 'form-control' %>
+                      </div>
+                      <label class="custom-control custom-checkbox">
+
+                        <input class="custom-control-input" id="formCheck" type="checkbox" name="shipping_address" value="new" onclick="toggleForm()"><span class="custom-control-label"></span>
+                        <span class="custom-control-description"><%= t('checkout.i_want_to_use_a_new_address') %></span>
+                      </label>
+                    </div>
+
+                    <div id="shippingAddress" style="display:none">
+                      <br>
+                      <div id="shipping-new" style="display: block;">
+                        <div class="form-group">
+                          <%= f.label :address_line1 %>
+                          <%= f.text_field :address_line1, autofocus: true, autocomplete: 'address_line1', class: 'form-control' %>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label :address_line2 %>
+                          <%= f.text_field :address_line2, autofocus: true, autocomplete: 'address_line2', class: 'form-control' %>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label :city %>
+                          <%= f.text_field :city, autofocus: true, autocomplete: 'city', class: 'form-control' %>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label :zipcode %>
+                          <%= f.number_field :zipcode, step: :any, autocomplete: 'zipcode', class: 'form-control' %>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label :state %>
+                          <%= f.text_field :state, autofocus: true, autocomplete: 'state', class: 'form-control' %>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label :country %>
+                          <%= f.select :country, CS.get.values(), {},class: 'form-control' %>
+                        </div>
+                        <div class="form-group">
+                          <%= f.label :phone %>
+                          <%= f.number_field :phone, step: :any, autocomplete: 'phone', class: 'form-control' %>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="shipping-method">
+                      <p><%= t('checkout.please_select_the_preferred_shipping_method_to_use_on_this_order') %></p>
+                      <h5><%= t('checkout.shipping_methods') %></h5>
+                      <div class="radio">
+                        <label class="custom-control custom-radio">
+                          <input id="radio1" class="custom-control-input" name="shipping_method" value="flat.flat" title="Flat Shipping Rate" checked="checked" type="radio"><span class="custom-control-label"></span>
+                          <span class="custom-control-description"><%= t('checkout.flat_shipping_rate') %> - <%= AppSetting.instance.currency %> 8.00</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class='col-md-6'>
+                    <div class="your_order">
+                      <h5><%= t('checkout.order_details') %></h5>
+                      <table id="cart_table" class="table table-hover table-bordered" data-cart>
+                        <thead>
+                          <tr>
+                            <th class="text-xs-left hidden-xs"><%= t('checkout.product_image') %></th>
+                            <th class="text-xs-left"><%= t('checkout.product_name') %></th>
+                            <th class="text-xs-right hidden-xs"><%= t('checkout.quatity') %></th>
+                            <th class="text-xs-right hidden-xs"><%= t('checkout.unit_price') %></th>
+                            <th class="text-xs-right"><%= t('checkout.total') %></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% @order_items.each do |item| %>
+                          <% product = Product.find(item.product_id) %>
+                          <tr data-product>
+                            <td class="text-center">
+                              <a href='<%= storefront_product_path("#{product.id}") %>' data-url>
+                                <img src="<%= product.product_image_url %>" alt="iPhone" title="iPhone" class="img-fluid" width="100px" />
+                              </a>
+                            </td>
+                            <td class="text-xs-left"><a href="http://agency.nicolette.ro/index.php?route=product/product&amp;product_id=33" data-url><span data-name><%= product.name %></span></a>
+                            </td>
+                            <td class="text-xs-left hidden-xs"><%= item.quantity %></td>
+                            <td class="text-xs-right hidden-xs"><%= product.price %></td>
+                            <td class="text-xs-right hidden-xs"><%= "#{AppSetting.instance.currency} #{item.amount}" %></td>
+                          </tr>
+                        </tbody>
+                        <% end %>
+                        <tfoot>
+                          <tr>
+                            <td colspan="3" class="text-xs-right hidden-xs-down"><strong><%= t('checkout.sub_total') %>:</strong></td>
+                            <td colspan="1" class="text-xs-right hidden-sm-up"><strong><%= t('checkout.sub_total') %>:</strong></td>
+                            <td class="text-xs-right"><%= "#{AppSetting.instance.currency} #{@order.total_amount}" %></td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" class="text-xs-right hidden-xs-down"><strong><%= t('checkout.flat_shipping_rate') %>:</strong></td>
+                            <td colspan="1" class="text-xs-right hidden-sm-up"><strong><%= t('checkout.flat_shipping_rate') %>:</strong></td>
+                            <td class="text-xs-right"><%= AppSetting.instance.currency %> 5.00</td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" class="text-xs-right hidden-xs-down"><strong><%= t('checkout.eco_tax') %> (-2.00):</strong></td>
+                            <td colspan="1" class="text-xs-right hidden-sm-up"><strong><%= t('checkout.eco_tax') %> (-2.00):</strong></td>
+                            <td class="text-xs-right"><%= AppSetting.instance.currency %> 4.00</td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" class="text-xs-right hidden-xs-down"><strong><%= t('checkout.vat') %> (20%):</strong></td>
+                            <td colspan="1" class="text-xs-right hidden-sm-up"><strong><%= t('checkout.vat') %> (20%):</strong></td>
+                            <td class="text-xs-right"><%= AppSetting.instance.currency %> 41.00</td>
+                          </tr>
+                          <tr>
+                            <td colspan="3" class="text-xs-right hidden-xs-down"><strong><%= t('checkout.total') %>:</strong></td>
+                            <td colspan="1" class="text-xs-right hidden-sm-up"><strong><%= t('checkout.total') %>:</strong></td>
+                            <td class="text-xs-right"><%= AppSetting.instance.currency %> 250.00</td>
+                          </tr>
+                        </tfoot>
+                      </table>
+
+                      <br>
+                      <div class="payment-method">
+                        <p><%= t('checkout.please_select_the_preferred_payment_method_to_use_on_this_order') %></p>
+                        <div class="radio">
+                          <label class="custom-control custom-radio">
+                            <input id="radio1" class="custom-control-input" name="payment_method" value="online" title="PayPal Express Checkout" type="radio"><span class="custom-control-label"></span>
+                            <span class="custom-control-description"><%= t('checkout.online_payment') %></span>
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label class="custom-control custom-radio">
+                            <input id="radio1" class="custom-control-input" name="payment_method" value="cod" title="Cash On Delivery" type="radio"><span class="custom-control-label"></span>
+                            <span class="custom-control-description"><%= t('checkout.cash_on_delivery') %></span>
+                          </label>
+                        </div>
+                      </div>
+                      <p><strong><%= t('checkout.add_comments_about_your_order') %></strong></p>
+                      <p>
+                        <div class="form-group">
+                          <%= f.label t('checkout.comment') %>
+                          <%= f.text_area :comment, autofocus: true, autocomplete: 'state', class: 'form-control' %>
+                        </div>
+                      </p>
+                      <div class="buttons clearfix">
+                        <div class="float-xs-right"><%= t('checkout.i_have_read_and_agree_to_the') %> <a href="http://agency.nicolette.ro/index.php?route=information/information/agree&amp;information_id=5" class="agree"><b><%= t('checkout.terms_and_conditions') %></b></a> <input name="agree" value="1" type="checkbox">
+                          &nbsp;
+                        </div>
+                      </div>
+                      <div class="payment float-xs-right clearfix">
+                        <%= f.submit t('checkout.checkout'), class: 'btn btn-primary', data: {loading: {text: "Loading..."}}, id: "button-register", value: "Checkout" %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+function toggleForm() {
+  var checkBox = document.getElementById("formCheck");
+  var newForm = document.getElementById("shippingAddress");
+  var addresses = document.getElementById("addresses");
+  var form = document.getElementById("mainForm");
+
+  if (checkBox.checked == true){
+    newForm.style.display = "block";
+    addresses.style.display = "none";
+    form.action = "<%= storefront_addresses_path%>";
+  } else {
+     newForm.style.display = "none";
+     addresses.style.display = "block";
+  }
+}
+</script>

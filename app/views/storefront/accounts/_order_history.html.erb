@@ -1,0 +1,53 @@
+<div class="col-10">
+    <% if orders.blank? %>
+    <p>
+        <b>No orders found</b>
+    </p>
+    <% else %>
+    <table class="table table-striped table-sm table-bordered table-responsive-sm">
+        <thead class="bg-secondary text-light">
+            <tr>
+                <th><%= t('account_settings.order_history.order_number') %></th>
+                <th><%= t('account_settings.order_history.user') %></th>
+                <th><%= t('account_settings.order_history.status') %></th>
+                <th><%= t('account_settings.order_history.total_amount') %></th>
+                <th><%= t('account_settings.order_history.action') %></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% orders.each do |order| %>
+            <tr>
+                <td>
+                    <%= link_to order.order_number, admin_order_path(order) %>
+                </td>
+                <td>
+                    <%= order.user_name %>
+                </td>
+                <td>
+                    <% if order.deleted? %>
+                        <span data-feather="trash-2"></span>
+                        <% elsif order.status == Order::CONFIRMED %>
+                        <span data-feather="thumbs-up"></span>
+                    <% elsif order.status && !order.deleted? %>
+                        <span data-feather="shopping-cart"></span>
+                    <% end %> <%= order.status %>
+                </td>
+                <td>
+                    <%= order.total_amount %>
+                </td>
+                <td>
+                    <span>
+                        <%- if(order.status == Order::PROCESSING) %>
+                            <%= button_to storefront_order_path(order), method: :delete, class: "btn-danger" do %>
+                                <i class="la la-times-circle"></i>
+                            <% end %>
+                        <% end %>
+                    </span>
+                </td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+    <hr>
+    <%= pagy_bootstrap_nav(@pagy).html_safe %> <% end %>
+</div>

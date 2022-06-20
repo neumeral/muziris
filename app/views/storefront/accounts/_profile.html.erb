@@ -1,0 +1,27 @@
+    <div class="container">
+      <div class="justify-content-md-center">
+        <div class="col-md-6 mx-auto mt-5 col col-sm-6 col-xs-12">
+          <div class="card p-3">
+            <h5 class="text-center"><%= link_to edit_storefront_profile_path(current_user) do %> <i class="la la-edit"></i><%= current_user.name.capitalize %><% end %></h5>
+            <hr>
+              <p id="notice"><%= notice %>
+              </p>
+              <dl class="row">
+                <dt class="col-sm-6">Name:</dt>
+                <dd class="col-sm-6"><%= current_user.name %>
+                </dd>
+                <dt class="col-sm-6">Email:</dt>
+                <dd class="col-sm-6"><%= current_user.email %>
+                </dd>
+                <dt class="col-sm-6">Mobile:</dt>
+                <dd class="col-sm-6"><%= current_user.mobile %>
+                </dd>
+                <dt class="col-sm-6">Admin:</dt>
+                <dd class="col-sm-6"><%= current_user.admin? %>
+                </dd>
+              </dl>
+            </hr>
+          </div>
+        </div>
+      </div>
+    </div>

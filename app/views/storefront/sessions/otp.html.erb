@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-md-4 mx-auto mt-5 col col-sm-6 col-xs-12">
+    <div class="card p-3">
+      <h6 class="text-center">Login with OTP</h6>
+      <hr/>
+      <%= form_for(:session, url: storefront_sessions_path) do |f| %>
+        <div class="form-group">
+          <%= f.hidden_field :email, value: @login_params[:email], class: 'form-control' %>
+        </div>
+        <div class="form-group">  
+          <%= f.hidden_field :mobile, value: @login_params[:mobile], class: 'form-control' %>
+        </div>
+        <div class="form-group">
+          <%= f.label :otp %>
+          <%= f.text_field :otp, autofocus: true, autocomplete: 'name', class: 'form-control' %>
+        </div>
+        <div class="actions">
+          <%= f.submit 'Login', class: 'btn btn-primary btn-block' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

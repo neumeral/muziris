@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="thickline"></div>
+</div>
+<nav class="breadcrumb container mb-0">
+    <a class="breadcrumb-item" href="<%= storefront_home_path %>">
+        <%= t('home.home') %>
+    </a>
+    <p class="breadcrumb-item">
+        <%= t('static_pages.support') %>
+    </p>
+</nav>
+
+<div class="container">
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="">
+            <div class='list-group-item bg-light'>
+                <%= link_to t('static_pages.delivery'), delivery_storefront_static_page_path %>
+            </div>
+            <div class='list-group-item bg-white'>
+                <%= link_to t('static_pages.support'), support_storefront_static_page_path %>
+            </div>
+            <div class='list-group-item bg-light'>
+                <%= link_to t('static_pages.terms_and_conditions'), terms_and_conditions_storefront_static_page_path %>
+            </div>
+            <div class='list-group-item bg-light'>
+                <%= link_to t('static_pages.privacy_policy'), privacy_policy_storefront_static_page_path %>
+            </div>
+            <div class='list-group-item bg-light'>
+                <%= link_to t('static_pages.faq'), faq_storefront_static_page_path %>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+
+        <h1 class='h2'>Support</h1>
+
+        <div class="text-justify">
+            Kindly check the FAQ below if you are not very familiar with the functioning of this website. If your query is of urgent nature and is different from the set of questions then do write to us at customerservice@bigbasket.com or call us on 1860 123 1000 between 7 am & 10 pm on all days including Sunday to get our immediate help.
+        </div>
+    </div>
+</div>
+
+</div>

@@ -1,0 +1,6 @@
+= link_to admin_settings_tax_rates_path, class: 'btn btn-primary btn-sm' do
+  %span{'data-feather' => 'arrow-left-circle'}
+%h1.text-center New Tax Rate
+%br/
+%br/
+= render 'form', tax_rate: @tax_rate

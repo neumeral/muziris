@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="thickline"></div>
+  <br>
+  
+  <h1>Credit card</h1>
+  <br>  
+<%= form_for(:credit_card, url: credit_card_storefront_payment_methods_activemerchants_path) do |f| %>
+  <div class="form-group">
+    <%= f.label :first_name %><br />
+    <%= f.text_field :first_name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :last_name %><br />
+    <%= f.text_field :last_name, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :card_type %><br />
+    <%= f.select :card_type, [["Visa", "visa"], ["MasterCard", "master"], ["Discover", "discover"], ["American Express", "american_express"]],{}, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :card_number %><br />
+    <%= f.text_field :card_number, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :card_verification, "Card Verification Value (CVV)" %><br />
+    <%= f.text_field :card_verification, class: 'form-control' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :card_expires_on %><br />
+    <%= f.date_select :card_expires_on, discard_day: true, start_year: Date.today.year, end_year: (Date.today.year+10), add_month_numbers: true, class: 'form-control' %>
+  </div>
+  <div><%= f.submit "Submit", class: "btn-primary" %></div>
+<% end %>
+</div>

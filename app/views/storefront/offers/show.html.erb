@@ -1,0 +1,49 @@
+
+<br/>
+<div class="content">
+  <div id="carouselExampleCaptions">
+    <div class="carousel-item active">
+      <%- if  @main_offer %>
+        <img class="d-block w-100" src="<%= @main_offer.image_url %>" data-holder-rendered="true" style="width: 100%; display: block; max-height: 500px;">
+          <div class="carousel-caption d-none d-md-block">
+            <h5><%= @main_offer.title %>
+            </h5>
+          </div>
+      <% end %>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <hr/>
+  <br/>
+  <div class="container">
+    <section class="col-md-9 col-sm-7 col-12 products" data-products="limit:4 page:0 id:1679,807,786,1597">
+      <div class="row"><%- @banner_items.each do |banner_item|%>
+        <div class="col-md-3 col-6 mt-2" data-product>
+          <%- if banner_item.web_params %>
+            <% web_params = JSON.parse(banner_item.web_params).with_indifferent_access %>
+            <% link = web_params[:link] %>
+          <% else %>
+             <% link = '#' %>
+          <% end %>
+          
+          <div class="product card"><%= link_to (image_tag banner_item.image_url, class: 'card-img-top p-2', style: 'width: 100%; display: block; max-height: 200px;') ,link %>
+            <a href='<%= link %>' data-product-url data-name data-url>
+              <div class="card-body p-2">
+                <h3 class='mb-1 h6 text-center'>
+                  <b><%= banner_item.title %>
+                  </b>
+                </h3>
+              </div>
+            </a>
+          </div>
+          <!-- product -->
+        </div>
+        <!-- col-md --><%- end %>
+      </div>
+      <!-- row -->
+      <div class='d-flex justify-content-center mt-5'>
+        <ul class="pagination"><%= pagy_bootstrap_nav(@pagy).html_safe %>
+        </ul>
+      </section>
+    </div>

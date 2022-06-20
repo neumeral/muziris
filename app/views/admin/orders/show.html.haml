@@ -1,0 +1,35 @@
+= link_to admin_orders_path, class: 'btn btn-primary btn-sm' do
+  %span{'data-feather' => 'arrow-left-circle'}
+%h1.text-center Order info
+%br/
+%br/
+.row
+  .col-12
+    .action-bar
+      = link_to admin_order_path(@order), method: :delete, class: 'btn btn-primary btn-sm' do
+        %span{'data-feather' => 'trash'}
+.row
+  .col-md-4.mx-auto.mt-5.col.col-sm-6.col-xs-12
+    .card.p-3
+      %h6.text-center Order/#{@order.order_number}
+      %hr
+        %p#notice= notice
+        %dl.row
+          %dt.col-sm-6 Order Number:
+          %dd.col-sm-5
+            = @order.order_number
+          %dt.col-sm-6 User:
+          %dd.col-sm-5
+            = @order.user_name
+          %dt.col-sm-6 Total amount:
+          %dd.col-sm-5
+            = @order.total_amount
+          %dt.col-sm-6 Status:
+          %dd.col-sm-5
+            = @order.status
+          %dt.col-sm-6 Deleted at:
+          %dd.col-sm-5
+            = @order.deleted_at
+        - if @order.payment_status == Payment::INITIATED
+          = link_to 'Complete Payment',done_payment_admin_order_path(@order), class: 'btn btn-primary btn-block'
+          

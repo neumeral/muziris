@@ -1,0 +1,22 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: mini_shop_development
+  username:
+  password:
+  timeout: 5000
+
+test:
+  <<: *default
+  database: mini_shop_test
+  username:
+  password:
+  timeout: 5000
+
+production:
+  <<: *default
+  database: mini_shop

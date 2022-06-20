@@ -1,0 +1,167 @@
+<div class="content">
+  <div class="container">
+    <div class="thickline"></div>
+  </div>
+  <nav class="breadcrumb container">
+    <a class="breadcrumb-item" href='<%= storefront_home_path %>'><%= t('products.home') %></a>
+    <a class="breadcrumb-item" href='<%= storefront_category_path("#{@category.id}") %>'><%= @category.name %></a>
+    <a class="breadcrumb-item" href='<%= storefront_product_path("#{@product.id}") %>'><%= @product.name %></a>
+  </nav>
+  <article class="product-details container" data-component-product>
+    <div class="row">
+      <!-- gallery and tabs column -->
+      <div class="col-md-8">
+        <div class="zoom-gallery row">
+          <ul class="list-unstyled product-gallery col-md-2">
+            <% @product.product_images.each do |product_image| %>
+            <li class="list-item">
+              
+              <a href="<%= product_image.image_url %>"><img src="<%= product_image.image_url %>" class="img-fluid"></a>
+            </li>
+            <% end %>
+          </ul>
+          <div class="col-md-10">
+            <a href="<%= @product.product_image_url %>"><img src="<%= @product.product_image_url %>" class="img-fluid" data-image></a>
+          </div>
+        </div>
+      </div>
+      <!-- product name and add to cart -->
+      <div class="col-md-4">
+        <h1 class="product-heading" data-name><%= @product.name %></h1>
+        <!-- product attributes -->
+        <ul class="list-unstyled text-muted">
+          <li>Category: <span><%= @category.name %></span></li>
+
+          <li>SKU: <span>333</span></li>
+          
+          <li>Stock: <span><%= @product.current_stock %></span></li>
+        </ul>
+        <div class="old-price">
+          <span class="currency" data-currency><%= AppSetting.instance.currency %></span> <span data-price><%= @product.price + 45 %></span>
+        </div>
+        <div class="price h3">
+          <span class="currency" data-currency><%= AppSetting.instance.currency %></span> <span data-price><%= @product.price %></span>
+        </div>
+        <hr>
+        <div class="form-group row">
+          <label for="productQuantity" class="col-form-label col-4"><%= t('products.quantity') %></label>
+          <input id="productQuantity" class="col-8 form-control" type="number" name="quantity" min="1" max="5">
+        </div>
+        <a href='<%= add_to_cart_storefront_order_path("#{@product.id}") %>' type="button" class="btn btn-sm btn-secondary" title="Add to Cart" data-product-url data-name data-url><i class="la la-cart-plus"></i> <%= t('products.add_to_cart') %></a>
+
+        <div class="btn-group mt-3" role="group">
+          <button type="button" class="btn  btn-link text-black-50 btn-sm" title="Wishlist">
+          <i class="la la-heart"></i> <%= t('products.wishlist') %>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="product-tabs clearfix" role="tabpanel">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-expanded="true"><%= t('products.short_description') %></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-expanded="false"><%= t('products.specification') %></a>
+        </li>
+
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div role="tabpanel" class="tab-pane fade active show" id="home" aria-labelledby="home-tab" aria-expanded="true" data-description>
+          <p><%= @product.short_description %></p>
+        </div>
+
+        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab" aria-expanded="false">
+          <p><%= @product.description %></p>
+        </div>
+
+      </div>
+    </div>
+  </article>
+  <!-- product-details -->
+  <div class="container products-tab-carousel mt-5">
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-featured-tab" data-toggle="tab" href="#nav-featured" role="tab" aria-controls="nav-home" aria-selected="true"><%= t('products.featured_products') %></a>
+      </div>
+    </nav>
+    <div class="tab-content" id="nav-featured">
+      <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-featured-tab">
+        <section class="container products clearfix">
+          <div class="owl-carousel owl-theme">
+<%- @featured_products.each do |featured_product|%>
+<%- product = Product.find(featured_product.product_id) %>
+<div class="item mt-2" data-product>
+  <div class="product card" style="height: 350px;">
+    <%- if product.product_images.first %>
+    <%= link_to (image_tag product.product_images.first.image_url, class: 'card-img-top p-2', style: 'width: 100%; display: block; max-height: 200px;') ,storefront_product_path(id: product.id) %>
+  <%- else%>
+    <%= link_to 'No images' ,storefront_product_path(:id => product.id), class: 'card-img-top p-2', style: 'width: 100%; display: block; max-height: 200px;' %>
+  <%- end %>
+    <div class="card-body p-2">
+      <h3 class='mb-1 h6'>
+        <a href='<%= storefront_product_path("#{product.id}") %>' data-product-url data-name data-url><%= product.name %></a>
+      </h3>
+      <span class="description text-muted" data-product-description>
+      <%= product.short_description %>
+      </span>
+      <div class="price-group py-2">
+        <div class="price d-inline-block">
+          <span class="currency" data-product-currency><%= AppSetting.instance.currency %></span> <span data-product-price><%= product.price %></span>
+        </div>
+        <div class="old-price d-inline-block">
+          <span class="currency" data-product-currency><%= AppSetting.instance.currency %></span> <span data-product-price><%= product.price + 245 %></span>
+        </div>
+
+      </div>
+      <div class="btngroup">
+        <a href='<%= add_to_cart_storefront_order_path("#{@product.id}") %>' type="button" class="btn btn-sm btn-secondary" title="Add to Cart" data-product-url data-name data-url><i class="la la-cart-plus"></i> <%= t('products.add_to_cart') %></a>
+        <span class='float-right'>
+          <button type="button" class="btn btn-sm" title="Add to favorites" data-product-fav-url>
+            <i class="la la-heart"></i>
+          </button>
+        </span>
+
+      </div>
+    </div>
+  </div>
+</div>
+<%- end %>
+
+            <!-- col-md -->
+          </div>
+          <!-- row -->
+        </section>
+        <!-- products -->
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<%- content_for :scripts do %>
+<script>
+  $('.owl-carousel').owlCarousel({
+   loop:false,
+   navRewind:true,
+   margin:10,
+   nav:true,
+   dots:false,
+   navText: ['<i class="la la-angle-left"></i>','<i class="la la-angle-right"></i> '],
+   responsive:{
+     0:{
+       items:1
+     },
+     600:{
+       items:3
+     },
+     1000:{
+       items:5
+     }
+   }
+  })
+</script>
+<%- end %>

@@ -1,0 +1,59 @@
+<div class="container">
+    <div class="thickline"></div>
+</div>
+<nav class="breadcrumb container">
+    <a class="breadcrumb-item" href="<%= storefront_home_path %>"><%= t('home.home') %></a>
+    <p class="breadcrumb-item" ><%= t('account_settings.account_management') %></p>
+</nav>  
+<div class="row">
+    <div class="col-md-2 border-right">
+        <!-- Sidebar -->
+        <div class="position-fixed">
+            <a onclick="userProfile()" class="list-group-item list-group-item-action bg-light"><%= t('account_settings.profile') %></a>
+            <a onclick="addressManagement()" class="list-group-item list-group-item-action bg-light"><%= t('account_settings.address_management') %></a>
+            <a onclick="orderHistory()" class="list-group-item list-group-item-action bg-light"><%= t('account_settings.order_history.order_history') %></a>
+        </div>
+    </div>
+    <div class="col-md-10">
+        <div class="justify-content-md-center" id="orderHistory" style="display: none;">
+            <%= render 'order_history', orders: @order_history %>
+        </div>
+        <div class="container">
+            <div class="row justify-content-md-center" id="userProfile" style="display: block;">
+                <%= render 'profile' %>
+            </div>
+
+            <div id="addressManagement" style="display: none;">
+                <div class="row">
+                    <%= render 'addresses' %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function userProfile() {
+        var orderHistory = document.getElementById("orderHistory");
+        var profile = document.getElementById("userProfile");
+        var addressManagement = document.getElementById("addressManagement");
+        orderHistory.style.display = "none";
+        profile.style.display = "block";
+        addressManagement.style.display = "none";
+    }
+    function addressManagement() {
+        var orderHistory = document.getElementById("orderHistory");
+        var profile = document.getElementById("userProfile");
+        var addressManagement = document.getElementById("addressManagement");
+        orderHistory.style.display = "none";
+        profile.style.display = "none";
+        addressManagement.style.display = "block";
+    }
+    function orderHistory() {
+        var orderHistory = document.getElementById("orderHistory");
+        var profile = document.getElementById("userProfile");
+        var addressManagement = document.getElementById("addressManagement");
+        orderHistory.style.display = "block";
+        profile.style.display = "none";
+        addressManagement.style.display = "none";
+    }
+</script>

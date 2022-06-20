@@ -1,0 +1,82 @@
+<div class="content">
+    <div class="container">
+        <div class="thickline"></div>
+    </div>
+    <nav class="breadcrumb container">
+        <a class="breadcrumb-item" href="<%= storefront_home_path %>"><%= t('home.home') %></a>
+        <a class="breadcrumb-item" href=""><%= t('cart.your_cart') %></a>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+
+                    <div class="table-responsive">
+                        <table class="table table-bordered" data-cart>
+                            <thead>
+                                <tr>
+                                    <td class="text-center"><%= t('cart.image') %></td>
+                                    <td class="text-left"><%= t('cart.product_name') %></td>
+                                    <td class="text-left"><%= t('cart.quantity') %></td>
+                                    <td class="text-right"><%= t('cart.unit_price') %></td>
+                                    <td class="text-right"><%= t('cart.total') %></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% @order_items.each do |item| %>
+                                <% product = Product.find(item.product_id) %>
+                                <tr data-product>
+                                    <td class="text-center">
+                                        <a href='<%= storefront_product_path("#{product.id}") %>' data-url >
+                                            <img src="<%= product.product_image_url %>" alt="ptoduct" title="product" class="img-fluid" width="100px" />
+                                        </a>
+                                    </td>
+                                    <td class="text-left">
+                                        <a href='<%= storefront_product_path("#{product.id}") %>' data-name><%= product.name %></a>
+                                    </td>
+
+                                    <td class="text-left">
+
+                                        <%= form_for(:update_item, url: update_item_storefront_orders_path(item: item.id), method: :patch) do |f| %>
+
+                                        <div class="input-group btn-block" style="max-width: 200px;">
+                                            <div class="form-group">
+                                                <%= f.text_field :quantity, autofocus: true, name: "quantity", value: item.quantity, size: "1", class: "form-control" %> &nbsp; &nbsp; &nbsp;
+                                            </div>
+                                            <input type="hidden" name="item" value="<%= item.id %>" />
+
+                                            <span class="input-group-btn">
+                                                <%= f.button '<i class="la la-refresh"></i>'.html_safe, data: {toggle: "tooltip"}, data: {original: {title: "Update"}}, class: 'ml-1 btn btn-primary' %> &nbsp;
+
+                                                <button
+                                                    type="button"
+                                                    method="delete"
+                                                    data-toggle="tooltip"
+                                                    title=""
+                                                    class="ml-1 btn btn-danger"
+                                                    data-original-title="Remove"
+                                                    onclick="window.location.href = '<%= remove_item_storefront_orders_path(item_id: item.id) %>';"
+                                                >
+                                                    <i class="la la-times-circle"></i>
+                                                </button>
+                                            </span>
+                                        </div>
+                                        <% end %>
+                                    </td>
+
+                                    <td class="text-right"><%= "#{AppSetting.instance.currency} #{product.price}" %></td>
+                                    <td class="text-right"><%= "#{AppSetting.instance.currency} #{item.amount}" %></td>
+                                </tr>
+                                <% end %>
+                            </tbody>
+                        </table>
+                    </div>
+
+                <div class="col-12 text-center">
+                    <div class="mt-4">
+                        <a href="<%= checkout_storefront_orders_path %>" class="btn btn-primary btn-lg"><%= t('cart.confirm_order_and_proceed') %> &raquo;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

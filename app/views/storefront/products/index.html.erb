@@ -1,0 +1,134 @@
+<div class="content">
+  <div class="container">
+    <div class="thickline"></div>
+  </div>
+  <nav class="breadcrumb container">
+    <a class="breadcrumb-item" href='<%= storefront_home_path %>'><%= t('home.home') %></a>
+    <span class="breadcrumb-item active"><%= t('products.products') %></span>
+  </nav>
+  <div class="container">
+    <div class="row">
+      <aside class="col-md-3 col-sm-5 col-12 mb-4">
+<div class="card">
+  <article class="card-group-item">
+    <header class="card-header"><h6 class="title mb-0"><%= t('products.sub_categories') %> </h6></header>
+    <div class="filter-content">
+      <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item">Breakfast & Cereal.  <span class="float-right badge badge-light round">4</span> </a>
+        <a href="#" class="list-group-item">Cookies, Snacks & Candy.  <span class="float-right badge badge-light round">3</span>  </a>
+        <a href="#" class="list-group-item">Grains, Pasta & Sides <span class="float-right badge badge-light round">6</span>  </a>
+        <a href="#" class="list-group-item">Ice Cream/Sherbet <span class="float-right badge badge-light round">5</span>  </a>
+      </div>  <!-- list-group .// -->
+    </div>
+  </article> <!-- card-group-item.// -->
+  <article class="card-group-item">
+    <header class="card-header border-top">
+      <h6 class="title mb-0"><%= t('products.price_range') %> </h6>
+    </header>
+    <div class="filter-content">
+      <div class="card-body">
+      <div class="form-row">
+      <div class="form-group col-md-6">
+        <label><%= t('products.min') %></label>
+        <input type="number" class="form-control" id="inputEmail4" placeholder="<%= AppSetting.instance.currency %> 0">
+      </div>
+      <div class="form-group col-md-6 text-right">
+        <label><%= t('products.max') %></label>
+        <input type="number" class="form-control" placeholder="<%= AppSetting.instance.currency %> 1,0000">
+      </div>
+      </div>
+      </div> <!-- card-body.// -->
+    </div>
+  </article> <!-- card-group-item.// -->
+  <article class="card-group-item">
+    <header class="card-header border-top">
+      <h6 class="title mb-0"><%= t('products.brands') %> </h6>
+    </header>
+    <div class="filter-content">
+      <div class="card-body">
+        <div class="custom-control custom-checkbox">
+          <span class="float-right badge badge-light round">52</span>
+            <input type="checkbox" class="custom-control-input" id="Check1">
+            <label class="custom-control-label" for="Check1">DAVID Seeds</label>
+        </div> <!-- form-check.// -->
+
+        <div class="custom-control custom-checkbox">
+          <span class="float-right badge badge-light round">132</span>
+            <input type="checkbox" class="custom-control-input" id="Check2">
+          <label class="custom-control-label" for="Check2">PepsiCo</label>
+        </div> <!-- form-check.// -->
+
+        <div class="custom-control custom-checkbox">
+          <span class="float-right badge badge-light round">17</span>
+            <input type="checkbox" class="custom-control-input" id="Check3">
+            <label class="custom-control-label" for="Check3">Unilever</label>
+        </div> <!-- form-check.// -->
+        <div class="custom-control custom-checkbox">
+          <span class="float-right badge badge-light round">7</span>
+            <input type="checkbox" class="custom-control-input" id="Check4">
+            <label class="custom-control-label" for="Check4">Nestlé</label>
+        </div> <!-- form-check.// -->
+        <div class="custom-control custom-checkbox">
+          <span class="float-right badge badge-light round">7</span>
+            <input type="checkbox" class="custom-control-input" id="Check4">
+            <label class="custom-control-label" for="Check4">Other Brand</label>
+        </div> <!-- form-check.// -->
+      </div> <!-- card-body.// -->
+    </div>
+  </article>
+</div>
+
+      </aside>
+      <section class="col-md-9 col-sm-7 col-12 products" data-products="limit:4 page:0 id:1679,807,786,1597">
+        <%- if @text %>
+          <h3><%= @text %></h3>
+        <% end %>
+        <p class='text-muted mb-2'>24 results found.</p>
+
+
+        <div class="row">
+          <%- @products.each do |product|%>
+          <div class="col-md-3 col-6 mt-2" data-product>
+
+<div class="product card" style="height: 350px;">
+    <%= link_to (image_tag product.product_image_url, class: 'card-img-top p-2', style: 'width: 100%; display: block; max-height: 200px;') ,storefront_product_path(id: product.id) %>
+  
+  <div class="card-body p-2">
+    <h3 class='mb-1 h6'>
+      <a href='<%= storefront_product_path("#{product.id}") %>' data-product-url data-name data-url><%= product.name %></a>
+    </h3>
+    <span class="description text-muted" data-product-description>
+    Best Price Now
+    </span>
+    <div class="price-group py-2">
+      <div class="price d-inline-block">
+        <span class="currency" data-product-currency><%= AppSetting.instance.currency %></span> <span data-product-price><%= product.id %></span>
+      </div>
+      <div class="old-price d-inline-block">
+        <span class="currency" data-product-currency><%= AppSetting.instance.currency %></span> <span data-product-price><%= product.price + 245 %></span>
+      </div>
+
+    </div>
+    <div class="btngroup">
+      <a href='<%= add_to_cart_storefront_order_path("#{product.id}") %>' type="button" class="btn btn-sm btn-secondary" title="Add to Cart" data-product-url data-name data-url><i class="la la-shopping-cart"></i> <%= t('products.add_to_cart') %></a>
+      <button type="button" class="btn btn-sm" title="Add to favorites" data-product-fav-url>
+      <i class="la la-heart"></i>
+      </button>
+    </div>
+  </div>
+</div>
+            <!-- product -->
+          </div>
+          <!-- col-md -->
+          <%- end %>
+</div>
+        <!-- row -->
+        <div class='d-flex justify-content-center mt-5'>
+        <ul class="pagination">
+          <%= pagy_bootstrap_nav(@pagy).html_safe %>
+        </ul>
+      </section>
+      <!-- products -->
+    </div>
+  </div>
+</div>

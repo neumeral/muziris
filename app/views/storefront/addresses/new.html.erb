@@ -1,0 +1,21 @@
+<div class="content">
+  <div class="container">
+      <div class="thickline"></div>
+  </div>
+
+  <nav class="breadcrumb container">
+      <a class="breadcrumb-item" href='<%= storefront_home_path %>'><%= t('home.home') %></a>
+      <a class="breadcrumb-item" href='#'><%= t('address.profile') %></a>
+      <a class="breadcrumb-item" href='#'><%= t('address.account_settings') %></a>
+      <a class="breadcrumb-item" href=""><%= t('address.address_management') %></a>
+      <a class="breadcrumb-item" href=""><%= t('address.add') %></a>
+  </nav>
+</div>
+<div class="container">
+      <div class="row">
+          <div class="col-12">
+				<%= render 'form', address: @address %>
+			</div>
+		</div>
+	</div>
+

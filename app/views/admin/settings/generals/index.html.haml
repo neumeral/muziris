@@ -1,0 +1,19 @@
+- app_setting = AppSetting.instance
+.container
+  .col-5
+    = form_for(:settings, url: admin_settings_general_path(app_setting), method: :patch, html: {class: "form-inline"}) do |f|
+      %dl.row
+        %dt.col-5
+          .form-group
+            = f.label 'Choose a currency :'      
+        %dd.col-5
+          = f.select :currency, @currencies, {selected: app_setting.currency}, class: 'form-control'
+        %dt.col-5
+          .form-group
+            = f.label 'Text direction :'
+        %dd.col-5
+          = f.select :text_direction, ['RTL','LTR'], {selected: app_setting.text_direction}, class: 'form-control'
+        %dt.col-5
+          .actions
+            = f.submit 'Save', class: 'btn btn-primary'
+

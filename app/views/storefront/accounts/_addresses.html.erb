@@ -1,0 +1,89 @@
+
+<div class="col-lg-10">
+    <a class="btn btn-primary float-right" href="<%= new_storefront_address_path %>"><i class="la la-plus"></i></a>
+</div>
+<div class="col-5 border-right">
+    <br />
+    <h5 class="text-center"><%= t('account_settings.addresses.shipping_address') %></h5>
+    <% if @shipping_addresses.blank? %>
+    <p>
+        <b><%= t('account_settings.addresses.no_addresses_found') %></b>
+    </p>
+    <p><%= t('account_settings.addresses.add_an_address_by_clicking_the_above_button') %></p>
+    <% else %>
+    <div class="row">
+        <% @shipping_addresses.each do |address| %>
+        <div class="col-md-8 mt-5 col col-lg-12 col-xs-12">
+            <div class="card p-3">
+                <%= button_to storefront_address_path(address), method: :delete, class: "btn-primary" do %> <i class="la la-times-circle"></i><% end %>
+                <h5 class="text-center"><%= link_to edit_storefront_address_path(address) do %> <i class="la la-edit"></i><%= address.address_line1.capitalize() %><% end %></h5>
+                <div class="container">
+                    <div class="thickline"></div>
+                </div>
+                <p id="notice"><%= notice %></p>
+                <dl class="row">
+                    <dt class="col-sm-6">Address Line-1:</dt>
+                    <dd class="col-sm-5"><%= address.address_line1 %></dd>
+                    <dt class="col-sm-6">Address Line-2:</dt>
+                    <dd class="col-sm-5"><%= address.address_line2 %></dd>
+                    <dt class="col-sm-6">City:</dt>
+                    <dd class="col-sm-5"><%= address.city %></dd>
+                    <dt class="col-sm-6">Zip Code:</dt>
+                    <dd class="col-sm-5"><%= address.zipcode %></dd>
+                    <dt class="col-sm-6">State:</dt>
+                    <dd class="col-sm-5"><%= address.state %></dd>
+                    <dt class="col-sm-6">country:</dt>
+                    <dd class="col-sm-5"><%= address.country %></dd>
+                    <dt class="col-sm-6">Phone:</dt>
+                    <dd class="col-sm-5"><%= address.phone %></dd>
+                </dl>
+            </div>
+        </div>
+        <% end %>
+    </div>
+    <% end %>
+</div>
+<div class="col-5">
+    <br />
+    <h5 class="text-center"><%= t('account_settings.addresses.billing_address') %></h5>
+    <% if @billing_addresses.blank? %>
+    <p>
+        <b><%= t('account_settings.addresses.no_addresses_found') %></b>
+    </p>
+    <p><%= t('account_settings.addresses.add_an_address_by_clicking_the_above_button') %></p>
+    <% else %>
+    <div class="row">
+        <% @billing_addresses.each do |address| %>
+        <div class="col-md-8 mt-5 col col-lg-12 col-xs-12">
+            <div class="card p-3">
+                <%= button_to storefront_address_path(address), method: :delete, class: "btn-primary" do %> <i class="la la-times-circle"></i><% end %>
+                <h5 class="text-center"><%= link_to edit_storefront_address_path(address) do %> <i class="la la-edit"></i><%= address.address_line1.capitalize() %><% end %></h5>
+                <div class="container">
+                    <div class="thickline"></div>
+                </div>
+                <p id="notice"><%= notice %></p>
+                <dl class="row">
+                    <dt class="col-sm-6">Address Line-1:</dt>
+                    <dd class="col-sm-5"><%= address.address_line1 %></dd>
+                    <dt class="col-sm-6">Address Line-2:</dt>
+                    <dd class="col-sm-5"><%= address.address_line2 %></dd>
+                    <dt class="col-sm-6">City:</dt>
+                    <dd class="col-sm-5"><%= address.city %></dd>
+                    <dt class="col-sm-6">Zip Code:</dt>
+                    <dd class="col-sm-5"><%= address.zipcode %></dd>
+                    <dt class="col-sm-6">State:</dt>
+                    <dd class="col-sm-5"><%= address.state %></dd>
+                    <dt class="col-sm-6">country:</dt>
+                    <dd class="col-sm-5"><%= address.country %></dd>
+                    <dt class="col-sm-6">Phone:</dt>
+                    <dd class="col-sm-5"><%= address.phone %></dd>
+                </dl>
+            </div>
+        </div>
+        <% end %>
+    </div>
+    <% end %>
+</div>
+</div>
+
+

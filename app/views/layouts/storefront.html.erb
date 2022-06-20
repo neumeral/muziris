@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<%- text_direction = AppSetting.last.text_direction if AppSetting.last.text_direction %>
+<html dir="<%= text_direction %>" lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <title>Mini Shop Storefront</title>
+        <%- if text_direction == 'RTL' %>
+            <%= stylesheet_link_tag 'storefront/mainrtl', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <% else %>
+            <%= stylesheet_link_tag 'storefront/main', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <% end %>
+    </head>
+    <body>
+        <div class="page-container">
+            <div id="top-nav" class="d-none d-sm-block bg-light smaller-font-size text-muted">
+                <nav class="navbar-expand-md container px-3">
+                    <div class="navbar py-0" id="navbarsExampleDefault">
+                        <ul class="navbar-nav mr-auto">
+                            <span class="navbar-text">
+                                <%= link_to t('header.covid_19_message'), "#" %>
+                                <span>&bullet; <%= t('header.home_delivery_has_been_resumed') %></span> </span>
+                        </ul>
+
+                        <ul class="navbar-nav ml-auto">
+                            <span class="navbar-text"> <a class="text-muted" href="#" aria-haspopup="true" aria-expanded="false">EN</a> &nbsp; <a class="text-muted" href="#" aria-haspopup="true" aria-expanded="false">عربى</a> </span>
+                            &emsp;
+                            <% if current_user &.admin %>
+                                <span class="navbar-text"> <a href="<%= admin_dashboard_path %>"><%= t('header.admin') %></a> <span>
+                            <% end %>                  
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <header class="container mt-2">
+                <div class="row align-items-top">
+                    <div class="col-lg-3 col-6 py-2">
+                        <a href="<%= storefront_home_path %>" class="logo">
+                            <%= image_tag 'logo.png', class: 'img-fluid', style: 'max-height: 50px' %>
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-12 py-2">
+                        <%= form_for(:section, url: search_storefront_products_path, method: "get") do |f| %>
+                        <div class="input-group input-group-lg mb-3" id="search-box" data-component-category>
+                            <%= f.select :category_id, categories.sort, {}, class: "custom-select input-group-prepend
+                            form-control-lg border-1 bg-light default-font-size" %> <%= f.text_field :term, autocomplete: 'on', class: "form-control default-font-size", placeholder: t('home.search_product'), aria: {label: "Search Product"} %>
+                            <div class="input-group-append actions"><%= f.button '<i class="la la-search"></i>'.html_safe, class: 'btn btn-primary btn-block' %></div>
+                        </div>
+                        <% end %>
+                    </div>
+                    <div class="col-lg-3 d-none d-lg-block py-2">
+                        <div class="float-right" id="mini-cart" data-component-cart>
+                            <%= link_to cart_storefront_orders_path, class: 'btn bg-faded p-0
+                            chevron-big', id: "dropdownMenuLink", aria: {haspopup: "true", expanded: "false"} do %>
+                            <i class="la la-shopping-cart d-inline-block" style="font-size: 32px;"><span class="cart-items" data-total_items><%= @items_count %></span></i>  
+                            <% end %>
+                        </div>
+                        <%- if !current_user %>
+                        <div class="dropdown" id="mini-user" data-component-user>
+                            <a class="btn btn-link dropdown-toggle bg-faded p-0 chevron-big float-right" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="la la-user d-inline-block" style="font-size: 32px;"></i>&ensp;
+                                <div class="d-inline-block text-dark" data-if="login" >
+                                    <span class="small d-block text-left"><%= t('footer.my_account') %></span>
+
+                                    <span class="font-weight-bold"><%= t('home.login_or_register') %></span>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <%= link_to t('home.register'), new_registration_path('user'), class: 'dropdown-item' %>
+                                <%= link_to t('home.login'), new_user_session_path, class: 'dropdown-item' %>
+
+                            </div>
+                        </div>
+                        <% else %>
+                            <div class="float-right" id="mini-user" data-component-user>
+                            <%= link_to storefront_accounts_path do%>
+                            <i class="la la-user d-inline-block" style="font-size: 32px;"></i>&ensp;
+                            <% end %>
+                            <%= link_to t('home.sign_out'), destroy_user_session_path %>
+                            &emsp;
+                        </div>
+                        <% end %>
+                    </div>
+                </div>
+                <nav class="navbar navbar-light bg-white row navbar-expand-md mt-2 p-0">
+                    <div class="col-lg-4 col-7 pb-2 d-block">
+                        <div class="dropdown categories-dropdown">
+                            <a class="nav-link dropdown-toggle" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="la la-bars"></i>&nbsp; <%= t('home.categories') %> &nbsp;<i class=" float-right la la-chevron-down"></i>
+                            </a>
+                            <div class="dropdown-menu bg-theme" aria-labelledby="dropdown04">
+                                <%- @categories.each do |category| %>
+                                <a class="dropdown-item" href='<%= storefront_category_path("#{category.id}") %>'><%= category.name.capitalize() %></a>
+                                <% end %>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-5 d-block d-lg-none pb-2">
+                        <div class="float-right" id="mini-cart" data-component-cart>
+                            <%= link_to '<i class="la la-shopping-cart d-inline-block" style="font-size: 32px;"><span class="cart-items" data-total_items>3</span></i>'.html_safe,storefront_products_path, class: 'btn bg-faded p-0
+                            chevron-big', id: "dropdownMenuLink", aria: {haspopup: "true", expanded: "false"} %>
+                        </div>
+                        <div class="dropdown float-right" id="mini-user" data-component-user>
+                            <a class="btn btn-link dropdown-toggle bg-faded p-0" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="la la-user d-inline-block" style="font-size: 32px;"></i>
+                                <div class="text-dark d-none d-md-inline-block d-lg-inline-block" data-if="login">
+                                    <span class="small d-block text-left"><%= t('footer.my_account') %></span>
+                                    <span class="font-weight-bold"><%= t('home.login_or_register') %></span>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="#"><%= t('home.register') %></a>
+                                <a class="dropdown-item" href="#"><%= t('home.login') %></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 d-none d-lg-block">
+                        <ul class="navbar-nav float-right">
+                            <li class="nav-item">
+                                <%= link_to t('home.delivery'), delivery_storefront_static_page_path, class: 'nav-link' %>
+                            </li>
+                            <li class="nav-item">
+                                <%= link_to t('home.terms_and_conditions'), terms_and_conditions_storefront_static_page_path, class: 'nav-link' %>
+                            </li>
+                            <li class="nav-item">
+                                <%= link_to t('home.privacy_policy'), privacy_policy_storefront_static_page_path, class: 'nav-link' %>
+                            </li>
+                            <li class="nav-item">
+                                <%= link_to t('home.support'), support_storefront_static_page_path, class: 'nav-link' %>
+                            </li>
+                            <li class="nav-item dropdown">
+
+                                <%= link_to t('home.offers'), storefront_offer_path, class: "nav-link pr-0" %>
+                                <!-- <a class="nav-link dropdown-toggle pr-0" href="http://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></a>
+                                <div class="dropdown-menu" aria-labelledby="dropdown04">
+                                    <a class="dropdown-item" href="#"><%= t('home.faq') %></a>
+                                    <a class="dropdown-item" href="#"><%= t('home.our_story') %></a>
+                                </div> -->
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+            <%= yield %>
+            <footer class="bg-faded text-muted py-5 mt-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <a href="/" class="logo bg-white">
+                                <%= image_tag 'logo.png', class: 'img-fluid', style: 'max-height: 50px' %>
+                            </a>
+                            <p class="small text-light py-1"><%= t('home.copyright') %> &copy; <%= t('home.title') %> 2019</p>
+                            <div class="mt-4">
+                                <div class="f-link small py-1 text-light"><i class="la la-envelope"></i> &nbsp; <a href="mailto:support@hash32.com">info@mshop.com</a></div>
+                                <div class="f-link small py-1 text-light"><i class="la la-phone"></i> &nbsp; +971 908-0987-998</div>
+                                <div class="f-link my-3">
+                                    <a class="mr-1" href="#"><i class="la la-facebook"></i></a>
+                                    <a class="mr-1" href="#"><i class="la la-instagram"></i></a>
+                                    <a class="mr-1" href="#"><i class="la la-twitter"></i></a>
+                                    <a class="mr-1" href="#"><i class="la la-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <h5><%= t('footer.information') %></h5>
+                            <ul class="list-unstyled">
+                                <li><a href="#"><%= t('footer.about_us') %></a></li>
+                                <li><a href="#"><%= t('footer.delivery_information') %></a></li>
+                                <li><a href="#"><%= t('footer.privacy_policy') %></a></li>
+                                <li><a href="#"><%= t('footer.terms_and_conditions') %></a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-3">
+                            <h5><%= t('footer.customer_service') %></h5>
+                            <ul class="list-unstyled">
+                                <li><a href="#"><%= t('footer.contact_us') %></a></li>
+                                <li><a href="#"><%= t('footer.returns') %></a></li>
+                                <li><a href="#"><%= t('footer.site_map') %></a></li>
+                            </ul>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <h5><%= t('footer.my_account') %></h5>
+                            <ul class="list-unstyled">
+                                <li><a href="#"><%= t('footer.my_account') %></a></li>
+                                <li><a href="#"><%= t('footer.order_history') %></a></li>
+                                <li><a href="#"><%= t('footer.wish_list') %></a></li>
+                                <li><a href="#"><%= t('footer.newsletter') %></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <p class="float-right mb-0">
+                        <a href="#">
+                            <span style="font-size: 32px;"><i class="la la-chevron-circle-up"></i></span>
+                        </a>
+                    </p>
+                </div>
+            </footer>
+        </div>
+        <div class="alert alert-info alert-dismissible d-none alert-top" role="alert">
+            <div class="container">
+                <div class="message">
+                    <%= t('messages.product_was_added_to_cart') %>
+                </div>
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+        <!-- Bootstrap core JavaScript
+         ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <!-- script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script -->
+        <script src="https://unpkg.com/popper.js@1.14.3/dist/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script src="/storefront/js/main.js"></script>
+        <script src="/storefront/js/owl.carousel.min.js"></script>
+        <%= yield :scripts %>
+    </body>
+</html>
