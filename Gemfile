@@ -9,16 +9,16 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'devise'
 gem 'haml-rails'
 gem 'jbuilder', '~> 2.7'
-gem 'kaminari'
+gem 'kaminari', '~> 1.2.1'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'pg_search', '~> 2.2'
-gem 'puma', '~> 4.1'
+gem 'puma', '~> 4.3.12'
 gem 'rails', '~> 6.0.5'
 gem 'sass-rails', '>= 6'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 5.4.3'
 gem 'pagy', '~> 3.7.4'
-gem 'shrine', '~> 3.2.1'
+gem 'shrine', '~> 3.3.0'
 gem 'pundit', '~> 2.1.0'
 gem 'fast_jsonapi'
 gem 'rack-cors'
@@ -31,6 +31,9 @@ gem 'actionpack', '>= 6.0.3.1'
 gem 'stripe'
 gem 'countries'
 gem 'money', '~> 6.9'
+gem 'jmespath', '>= 1.6.1' # fix security vulnerability
+
+
 # gem 'ros-apartment', require: 'apartment'
 
 group :development, :test do
