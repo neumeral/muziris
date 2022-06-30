@@ -1,6 +1,6 @@
 # Muziris
 
-Muziris is a basic e-commerce solution built with Ruby on Rails 6.0
+Muziris is a basic e-commerce solution built with Ruby on Rails 6.x
 
 It is named after the port city of [Muziris](https://en.wikipedia.org/wiki/Muziris). Muziris was an ancient port in Malabar coast, that was the hub of spice trade in ancient Kerala.
 
