@@ -5,18 +5,18 @@ default: &default
 
 development:
   <<: *default
-  database: mini_shop_development
+  database: muziris_development
   username:
   password:
   timeout: 5000
 
 test:
   <<: *default
-  database: mini_shop_test
+  database: muziris_test
   username:
   password:
   timeout: 5000
 
 production:
   <<: *default
-  database: mini_shop
+  database: muziris

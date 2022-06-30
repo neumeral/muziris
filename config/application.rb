@@ -10,7 +10,7 @@ require 'json'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module MiniShop
+module Muziris
   class Application < Rails::Application
     config.before_configuration do
       env_file = File.join(Rails.root, 'config', 'env.yml')
