@@ -32,7 +32,7 @@ gem 'stripe'
 gem 'countries'
 gem 'money', '~> 6.9'
 gem 'jmespath', '>= 1.6.1' # fix security vulnerability
-
+gem 'comfortable_mexican_sofa', '~> 2.0.0'
 
 # gem 'ros-apartment', require: 'apartment'
 

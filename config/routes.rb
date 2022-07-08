@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  comfy_route :cms_admin, path: "/cmsadmin"
+
   devise_for :users, path: 'auth',
                      path_names: { sign_in: 'login', sign_out: 'logout',
                                    registration: 'register', sign_up: 'signup' }
@@ -211,4 +213,7 @@ Rails.application.routes.draw do
       delete :logout, to: 'sessions#destroy'
     end
   end
+
+  # Keep this at the bottom of routes
+  comfy_route :cms, path: "/"
 end
