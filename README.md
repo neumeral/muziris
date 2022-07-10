@@ -2,11 +2,12 @@
 
 Muziris is a basic e-commerce solution built with Ruby on Rails 6.x
 
+This is a fork of Mini Commerce (https://github.com/internetmango/mini_commerce).
+
 It is named after the port city of [Muziris](https://en.wikipedia.org/wiki/Muziris). Muziris was an ancient port in Malabar coast, that was the hub of spice trade in ancient Kerala.
 
 ## Demo
-
-You can view the demo deployed to heroku at [https://muzirisdemo.herokuapp.com](https://muzirisdemo.herokuapp.com).
+(coming soon)
 
 #### Admin Credentials
 
