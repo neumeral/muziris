@@ -110,7 +110,7 @@ Rails.application.routes.draw do
   namespace :storefront, path: :a do
     resource :accounts, only: :show
     resources :profiles, only: [:show, :edit, :update]
-    resources :registers, only: [:new, :create] do
+    resources :registrations, only: [:new, :create] do
       collection do
         get :otp
       end

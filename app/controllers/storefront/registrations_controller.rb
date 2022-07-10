@@ -1,5 +1,5 @@
 module Storefront
-  class RegistersController < StorefrontController
+  class RegistrationsController < StorefrontController
     def new; end
 
     def create
