@@ -1,0 +1,11 @@
+1. Fix failed specs
+
+rspec ./spec/requests/storefront/account_request_spec.rb:13 # Accounts GET /show returns http success
+rspec ./spec/requests/storefront/activemerchant_request_spec.rb:13 # Activemerchants POST /credit_card redirect to orders page
+rspec ./spec/requests/storefront/address_request_spec.rb:65 # Addresses DELETE /destroy redirect to index page
+rspec ./spec/requests/storefront/razorpay_request_spec.rb:13 # razorpays GET /new returns http success
+
+
+2. Fix Rubocop errors
+3. Check registrations => registers renamed to registrations
+4.
