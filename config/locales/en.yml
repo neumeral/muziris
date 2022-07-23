@@ -30,5 +30,4 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  title: "Mini Shop"
-  sign_out: "Sign Out"
+  hello: "Hello world"
