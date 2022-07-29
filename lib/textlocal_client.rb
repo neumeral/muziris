@@ -16,7 +16,7 @@ class TextlocalClient
       uri,
       apikey: TL_APIKEY,
       message: message,
-      sender: ENV['SMS_SENDER'],
+      sender: Rails.application.credentials.dig(:sender,:sms_sender);
       numbers: mobile_number
     )
 
