@@ -30,7 +30,7 @@ gem 'stripe'
 gem 'countries'
 gem 'money', '~> 6.9'
 gem 'jmespath', '>= 1.6.1' # fix security vulnerability
-
+gem 'rubocop', '~> 1.32', require: false 
 
 # gem 'ros-apartment', require: 'apartment'
 

@@ -5,8 +5,6 @@ if Rails.env.production?
   require 'shrine/storage/s3'
 
   s3_options = {
-    # bucket: ENV['AWS_BUCKET'],
-    # region: ENV['AWS_REGION'],
     bucket: Rails.application.credentials.dig(:aws,:bucket),
     region: Rails.application.credentials.dig(:aws,:region),
     access_key_id: Rails.application.credentials.dig(:aws, :access_key_id),
